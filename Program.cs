@@ -5,6 +5,8 @@ Communicator communicator = new Communicator();
 
 
 var mockEmail = "casper@example.com";
+
+/*
 DatabaseCalls.FetchCharacters(mockEmail);
 
 var characters = Character.AllCharacters;
@@ -20,7 +22,7 @@ var dataToSend = new
 var result = await communicator.PostDataAsync("https://localhost:7124/api/data", dataToSend);
 
 
-
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 
