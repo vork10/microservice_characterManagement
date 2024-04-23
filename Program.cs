@@ -4,20 +4,23 @@ using microservice_characterManagement;
 Communicator communicator = new Communicator();
 
 
-var mockEmail = "casper@example.com";
-DatabaseCalls.FetchCharacters(mockEmail);
+/*
+DatabaseCalls.FetchCharacters(3);
 
 var characters = Character.AllCharacters;
+
 
 var dataToSend = new
 {
     Id = characters[0].Id,
     Name = characters[0].Name,
     ClassType = characters[0].ClassType,
-    Level = characters[0].Level,
+    Level = characters[0].Level
 };
 
 var result = await communicator.PostDataAsync("https://localhost:7124/api/data", dataToSend);
+
+*/
 
 
 

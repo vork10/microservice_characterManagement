@@ -12,10 +12,22 @@ public class DataController : ControllerBase
         return Ok("Data received successfully!");
     }
 
-    [HttpGet]
-    public IActionResult GetData(JsonElement data)
+    [HttpGet("{id}")]
+    public IActionResult GetData(string id)
     {
-        // Your method logic here
-        return Ok("This is a test data response." + data);
+
+        DatabaseCalls.FetchCharacters(id);
+
+        var characters = Character.AllCharacters;
+
+        var dataToSend = new
+        {
+            Id = characters[0].Id,
+            Name = characters[0].Name,
+            ClassType = characters[0].ClassType.ToString(),
+            Level = characters[0].Level
+        };
+
+        return Ok(dataToSend);
     }
 }
