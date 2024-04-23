@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 [ApiController]
 [Route("api/data")]
@@ -15,19 +16,25 @@ public class DataController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetData(string id)
     {
-
         DatabaseCalls.FetchCharacters(id);
 
         var characters = Character.AllCharacters;
 
-        var dataToSend = new
+        // Create JsonSerializerOptions and add JsonStringEnumConverter
+        var options = new JsonSerializerOptions
         {
-            Id = characters[0].Id,
-            Name = characters[0].Name,
-            ClassType = characters[0].ClassType.ToString(),
-            Level = characters[0].Level
+            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
         };
 
-        return Ok(dataToSend);
+        List<string> result = new List<string>();
+        foreach (var character in characters)
+        {
+            var json = JsonSerializer.Serialize(character, options);
+            result.Add(json);
+        }
+
+        characters.Clear(); // Clear characters if necessary
+
+        return Ok(result);
     }
 }
