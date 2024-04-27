@@ -1,18 +1,19 @@
-
 # Use the official Microsoft .NET Core SDK image
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
-# Copy csproj and restore any dependencies (via NuGet)
+# Copy solution file and restore any dependencies (via NuGet)
+COPY LocalApi.sln ./
 COPY *.csproj ./
-RUN dotnet restore
+COPY */*.csproj ./
+RUN dotnet restore LocalApi.sln
 
 # Copy the project files and build our release
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish LocalApi.csproj -c Release -o out
 
 # Generate runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "LocalApi.dll"]
