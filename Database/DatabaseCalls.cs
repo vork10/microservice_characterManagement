@@ -3,10 +3,10 @@ using System.Data;
 
 public static class DatabaseCalls
 {
-    public static void FetchCharacters(string email)
+    public static void FetchCharacters(string accountID)
     {
         int id;
-        string receivedEmail;
+        string receivedAccountID;
         string name;
         string classType;
         int level;
@@ -16,11 +16,11 @@ public static class DatabaseCalls
         // Create parameter
         var parameters = new NpgsqlParameter[]
         {
-            new NpgsqlParameter("@email", email)
+            new NpgsqlParameter("@accountID", accountID)
         };
 
         // Execute the query with the parameter
-        var dataTable = database.ExecuteQuery("SELECT * FROM characters WHERE email = @email;", parameters);
+        var dataTable = database.ExecuteQuery("SELECT * FROM characters WHERE accountID = @accountID;", parameters);
 
         if (dataTable.Rows.Count > 0)
         {
@@ -29,7 +29,7 @@ public static class DatabaseCalls
             foreach (DataRow row in dataTable.Rows)
             {
                 id = Convert.ToInt32(row["id"]);
-                receivedEmail = row["email"].ToString();
+                receivedAccountID = row["accountID"].ToString();
                 name = row["name"].ToString();
                 classType = row["classType"].ToString();
                 level = Convert.ToInt32(row["level"]);
@@ -50,19 +50,20 @@ public static class DatabaseCalls
         else
         {
             System.Diagnostics.Debug.WriteLine("Email not found");
-            CreateNewUser(email);
+            CreateNewUser(accountID);
         }
     }
 
-    public static void CreateNewUser(string email)
+    public static void CreateNewUser(string accountID)
     {
         var parameters = new NpgsqlParameter[]
         {
-            new NpgsqlParameter("@email", email)
+            new NpgsqlParameter("@accountID", accountID)
         };
 
         var database = new DatabaseAccess();
 
-        database.ExecuteNonQuery("INSERT INTO characters (email, name, classType, level) VALUES (@email, null, null, null);", parameters);
-    }  
+        database.ExecuteNonQuery("INSERT INTO characters (accountID, name, classType, level) VALUES (@accountID, 'placeholder3', 'Warrior', 0);", parameters);
+    }
+
 }
