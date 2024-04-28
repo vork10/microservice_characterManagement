@@ -2,12 +2,13 @@ version: '3.8'
 services:
   app:
     build: .
+    ports:
+      - "7124:7124"
     depends_on:
       - db
     environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Port=5433;Database=characterDB;Username=postgres;Password=1234;
-    ports:
-      - "8080:80"
+      - ConnectionStrings__DefaultConnection=Server=db;Port=5432;Database=characterDB;Username=postgres;Password=1234;
+      - ASPNETCORE_ENVIRONMENT=Development
 
   db:
     image: postgres:16
