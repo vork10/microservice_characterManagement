@@ -6,6 +6,8 @@ services:
       - db
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Port=5433;Database=characterDB;Username=postgres;Password=1234;
+    ports:
+      - "8080:80"
 
   db:
     image: postgres:16
