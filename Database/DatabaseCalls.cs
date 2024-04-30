@@ -13,13 +13,11 @@ public static class DatabaseCalls
 
         var database = new DatabaseAccess();
 
-        // Create parameter
         var parameters = new NpgsqlParameter[]
         {
             new NpgsqlParameter("@accountID", accountID)
         };
 
-        // Execute the query with the parameter
         var dataTable = database.ExecuteQuery("SELECT * FROM characters WHERE accountID = @accountID;", parameters);
 
         if (dataTable.Rows.Count > 0)
@@ -34,11 +32,9 @@ public static class DatabaseCalls
                 classType = row["classType"].ToString();
                 level = Convert.ToInt32(row["level"]);
 
-                // Convert classType from string to CharacterClassType enum
                 CharacterClassType enumClassType;
                 if (Enum.TryParse(classType, true, out enumClassType))
                 {
-                    // Create the character using the constructor
                     Character newCharacter = new Character(id, name, enumClassType, level);
                 }
                 else
