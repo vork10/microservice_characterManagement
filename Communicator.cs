@@ -20,10 +20,8 @@ namespace microservice_characterManagement
             handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
             _httpClient = new HttpClient(handler);
 
-            // Configure your HttpClient here if needed (like headers, base address, etc.)
         }
 
-        // Asynchronously get data from the specified URL
         public async Task<string> GetDataAsync(string url)
         {
             try
@@ -41,7 +39,6 @@ namespace microservice_characterManagement
             }
         }
 
-        // Asynchronously post data to the specified URL
         public async Task<string> PostDataAsync(string url, object data)
         {
             try
