@@ -2,5 +2,6 @@ public enum CharacterClassType
 {
     Warrior,
     Mage,
-    Rogue
+    Rogue,
+    Assassin
 }
