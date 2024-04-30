@@ -53,19 +53,18 @@ public static class DatabaseCalls
         }
     }
 
-    public static void CreateCharacter(string accountID, string name, string classtype, int level)
+    public static void CreateCharacter(string accountID, string name, string classtype)
     {
         var parameters = new NpgsqlParameter[]
         {
         new NpgsqlParameter("@accountID", accountID),
         new NpgsqlParameter("@name", name),
-        new NpgsqlParameter("@classtype", classtype),
-        new NpgsqlParameter("@level", level)
+        new NpgsqlParameter("@classtype", classtype)
         };
 
         var database = new DatabaseAccess();
 
-        string sql = "INSERT INTO characters (accountID, name, classType, level) VALUES (@accountID, @name, @classtype, @level);";
+        string sql = "INSERT INTO characters (accountID, name, classType, level) VALUES (@accountID, @name, @classtype, 1);";
         database.ExecuteNonQuery(sql, parameters);
     }
 

@@ -1,35 +1,11 @@
 using microservice_characterManagement;
 
-
-Communicator communicator = new Communicator();
-
-
-/*
-DatabaseCalls.FetchCharacters(3);
-
-var characters = Character.AllCharacters;
-
-
-var dataToSend = new
-{
-    Id = characters[0].Id,
-    Name = characters[0].Name,
-    ClassType = characters[0].ClassType,
-    Level = characters[0].Level
-};
-
-var result = await communicator.PostDataAsync("https://localhost:7124/api/data", dataToSend);
-
-
-
-
-*/
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks(); // Register health checks
 
 // Add CORS services
 builder.Services.AddCors(options =>
@@ -48,11 +24,10 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MapHealthChecks("/health"); // Map the health checks endpoint
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll"); // Apply CORS policy

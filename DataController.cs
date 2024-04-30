@@ -12,9 +12,8 @@ public class DataController : ControllerBase
         string accountId = data.GetProperty("id").GetString();
         string name = data.GetProperty("name").GetString();
         string classtype = data.GetProperty("classtype").GetString();
-        int level = data.GetProperty("level").GetInt32();
 
-        DatabaseCalls.CreateCharacter(accountId, name, classtype, level);
+        DatabaseCalls.CreateCharacter(accountId, name, classtype);
 
         return Ok("Data received and processed successfully!");
     }
