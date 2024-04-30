@@ -50,20 +50,23 @@ public static class DatabaseCalls
         else
         {
             System.Diagnostics.Debug.WriteLine("Email not found");
-            CreateNewUser(accountID);
         }
     }
 
-    public static void CreateNewUser(string accountID)
+    public static void CreateCharacter(string accountID, string name, string classtype, int level)
     {
         var parameters = new NpgsqlParameter[]
         {
-            new NpgsqlParameter("@accountID", accountID)
+        new NpgsqlParameter("@accountID", accountID),
+        new NpgsqlParameter("@name", name),
+        new NpgsqlParameter("@classtype", classtype),
+        new NpgsqlParameter("@level", level)
         };
 
         var database = new DatabaseAccess();
 
-        database.ExecuteNonQuery("INSERT INTO characters (accountID, name, classType, level) VALUES (@accountID, 'placeholder3', 'Warrior', 0);", parameters);
+        string sql = "INSERT INTO characters (accountID, name, classType, level) VALUES (@accountID, @name, @classtype, @level);";
+        database.ExecuteNonQuery(sql, parameters);
     }
 
 }

@@ -9,8 +9,14 @@ public class DataController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] JsonElement data)
     {
-        Console.WriteLine("Received data: " + data.ToString());
-        return Ok("Data received successfully!");
+        string accountId = data.GetProperty("id").GetString();
+        string name = data.GetProperty("name").GetString();
+        string classtype = data.GetProperty("classtype").GetString();
+        int level = data.GetProperty("level").GetInt32();
+
+        DatabaseCalls.CreateCharacter(accountId, name, classtype, level);
+
+        return Ok("Data received and processed successfully!");
     }
 
     [HttpGet("{id}")]
