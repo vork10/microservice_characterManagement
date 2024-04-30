@@ -25,7 +25,6 @@ public class DataController : ControllerBase
 
         var characters = Character.AllCharacters;
 
-        // Create JsonSerializerOptions and add JsonStringEnumConverter
         var options = new JsonSerializerOptions
         {
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
@@ -38,7 +37,7 @@ public class DataController : ControllerBase
             result.Add(json);
         }
 
-        characters.Clear(); // Clear characters if necessary
+        characters.Clear();
 
         return Ok(result);
     }
