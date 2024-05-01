@@ -1,7 +1,7 @@
 public enum CharacterClassType
 {
     Warrior,
-    Mage,
-    Rogue,
+    Wizard,
+    Archer,
     Assassin
 }
